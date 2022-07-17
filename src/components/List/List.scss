@@ -1,0 +1,30 @@
+.table{
+    .cellWrapper{
+        display: flex;
+        align-items: center;
+
+        .image{
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 10px;
+            justify-self: center;
+            align-items: center;
+        }
+    }
+
+    .status{
+        padding: 5px;
+        border-radius: 5px;
+
+        &.Profitable{
+            color: green;
+            background-color: rgba(0, 128, 0, 0.151);
+        }
+       
+        &.Bleeding{
+            color: red;
+            background-color: rgba(253, 11, 11, 0.151);
+        }
+    }
+}
