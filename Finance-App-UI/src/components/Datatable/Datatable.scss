@@ -1,5 +1,5 @@
 .datatable{
-    height: 600px;
+    height: 850px;
     padding: 20px;
 
     .datatableTitle{
@@ -33,6 +33,22 @@
             border-radius:  50%;
             object-fit: cover;
             margin-right: 20px;
+        }
+    }
+
+    .priceWithStatus{
+        padding: 5px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        &.Profitable{
+            color: green;
+        }
+       
+        &.Bleeding{
+            color: red;
         }
     }
 
