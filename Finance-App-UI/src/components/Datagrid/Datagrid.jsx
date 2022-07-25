@@ -13,6 +13,8 @@ const actionColumn = [
   {
     field: "action",
     headerName: "Action",
+    align: "center",
+    headerAlign: "center",
     width: 185,
     renderCell: (params) => {
       return (
@@ -35,7 +37,7 @@ const Datagrid = () => {
 
   useEffect(() => {
     handleData();
-  });
+  }, []);
 
   useEffect(() => {
     handleRows();

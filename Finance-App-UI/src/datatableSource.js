@@ -10,14 +10,17 @@ export const columns = [
   {
     field: "stockLabel",
     headerName: "Name",
-    width: 100,
-    align: "left",
+    width: 125,
+    align: "center",
+    headerAlign: "center",
     editable: true,
   },
   {
     field: "initialPrice",
     headerName: "Initial",
-    width: 100,
+    align: "left",
+    headerAlign: "center",
+    width: 125,
     editable: true,
     renderCell: (params) => {
       return (
@@ -30,8 +33,9 @@ export const columns = [
   {
     field: "stockPrice",
     headerName: "Price",
-    width: 70,
-    align: "center",
+    width: 100,
+    align: "left",
+    headerAlign: "center",
     editable: true,
     renderCell: (params) => {
       let status = params.row.stockChange > 0 ? "Profitable" : "Bleeding";
@@ -50,7 +54,8 @@ export const columns = [
     headerName: "Day Change",
     type: "number",
     align: "center",
-    width: 100,
+    headerAlign: "center",
+    width: 125,
     editable: true,
     renderCell: (params) => {
       let status = params.row.stockChange > 0 ? "Profitable" : "Bleeding";
@@ -67,7 +72,8 @@ export const columns = [
     field: "totalChange",
     headerName: "Change",
     align: "center",
-    width: 100,
+    headerAlign: "center",
+    width: 125,
     renderCell: (params) => {
       let status = params.row.totalChange > 0 ? "Profitable" : "Bleeding";
       let icon =
@@ -83,7 +89,8 @@ export const columns = [
     field: "total",
     headerName: "Net",
     align: "center",
-    width: 200,
+    headerAlign: "center",
+    width: 250,
     renderCell: (params) => {
       let status = params.row.totalChange > 0 ? "Profitable" : "Bleeding";
       let icon =
@@ -109,8 +116,9 @@ export const columns = [
   {
     field: "shares",
     headerName: "Shares",
-    align: "right",
-    width: 100,
+    align: "center",
+    headerAlign: "center",
+    width: 150,
     renderCell: (params) => {
       return <div className="price">{params.row.shares}</div>;
     },

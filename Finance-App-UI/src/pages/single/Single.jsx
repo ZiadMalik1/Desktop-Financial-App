@@ -1,3 +1,5 @@
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Chart from "../../components/Chart/Chart";
 import List from "../../components/List/List";
 import NavBar from "../../components/NavBar/NavBar";
@@ -5,6 +7,21 @@ import Sidebar from "../../components/SideBar/SideBar";
 import "./Single.scss";
 
 const Single = () => {
+  const [stocks, setStocks] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  function getData() {
+    axios
+      .get("http://localhost:8080/api/v1/assets")
+      .then((response) => response.data)
+      .then((data) => {
+        setStocks(data);
+      });
+  }
+
   return (
     <div className="single">
       <Sidebar />
@@ -47,7 +64,7 @@ const Single = () => {
             </div>
           </div>
           <div className="right">
-            <Chart aspect={3 / 1} title="Apple's Year" />
+            <Chart stocks={stocks} aspect={3 / 1} title="Apple's Year" />
           </div>
         </div>
         <div className="bottom">

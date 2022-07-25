@@ -1,7 +1,12 @@
 import axios from "axios";
 import React from "react";
 import {
-  Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis,
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
   YAxis
 } from "recharts";
 import "./Chart.scss";
