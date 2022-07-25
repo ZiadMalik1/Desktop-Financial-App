@@ -94,7 +94,8 @@ public class Asset {
     }
 
     public double getUpdatedPrice() throws IOException, ParseException {
-        return Double.parseDouble(finnhubClient.getQuote(this.getLabel()).getCurrentPrice());
+        return this.updatedPrice;
+                //Double.parseDouble(finnhubClient.getQuote(this.getLabel()).getCurrentPrice());
     }
 
     public void setUpdatedPrice(double updatedPrice) {

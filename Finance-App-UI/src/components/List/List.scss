@@ -1,9 +1,9 @@
-.table{
-    .cellWrapper{
+.table {
+    .cellWrapper {
         display: flex;
         align-items: center;
 
-        .image{
+        .image {
             width: 32px;
             height: 32px;
             border-radius: 50%;
@@ -13,16 +13,16 @@
         }
     }
 
-    .status{
+    .status {
         padding: 5px;
         border-radius: 5px;
 
-        &.Profitable{
+        &.Profitable {
             color: green;
             background-color: rgba(0, 128, 0, 0.151);
         }
-       
-        &.Bleeding{
+
+        &.Bleeding {
             color: red;
             background-color: rgba(253, 11, 11, 0.151);
         }

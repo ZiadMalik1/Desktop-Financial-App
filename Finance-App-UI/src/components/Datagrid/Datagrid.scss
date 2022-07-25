@@ -1,0 +1,39 @@
+.price {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'lcd phone', sans-serif;
+    color: black;
+    font-size: 14px;
+
+    &.up {
+        color: green;
+    }
+
+    &.down {
+        color: red;
+    }
+
+}
+
+.net {
+    display: flex;
+    gap: 20px;
+
+    .netTotal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .netChange {
+        display: flex;
+        font-size: 10px;
+
+        .details {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}

@@ -36,7 +36,8 @@ public class AssetController {
             @RequestParam(required = false) String label,
             @RequestParam(required = false) String date,
             @RequestParam(required = false) Double price){
-        assetService.updateAsset(assetId, label, LocalDate.parse(date), price);
+        System.out.println(assetId);
+        assetService.updateAsset(assetId, label, date, price);
     }
 
     @DeleteMapping(path = "{assetId}")

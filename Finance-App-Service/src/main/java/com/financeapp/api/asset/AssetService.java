@@ -19,20 +19,20 @@ public class AssetService {
         this.assetRepository = assetRepository;
     }
 
-    public List<Asset> getAllAssets(){
+    public List<Asset> getAllAssets() {
         return assetRepository.findAll();
     }
 
     public void addAsset(Asset asset) {
         Optional<Asset> assetOptional = assetRepository.findAssetByLabel(asset.getLabel());
-        if(assetOptional.isPresent()) {
+        if (assetOptional.isPresent()) {
             throw new IllegalStateException("Label already Exists");
         }
         assetRepository.save(asset);
     }
 
     public void deleteAsset(Long assetId) {
-        if(!assetRepository.existsById(assetId)){
+        if (!assetRepository.existsById(assetId)) {
             throw new IllegalStateException("Asset with ID: " + assetId + " Does Not Exist");
         }
         assetRepository.deleteById(assetId);
@@ -41,21 +41,24 @@ public class AssetService {
     @Transactional
     public void updateAsset(Long assetId,
                             String label,
-                            LocalDate date,
+                            String stringDate,
                             Double price) {
         Asset asset = assetRepository.findAssetById(assetId)
-                .orElseThrow( () -> new IllegalStateException(
+                .orElseThrow(() -> new IllegalStateException(
                         "Asset with ID: " + assetId + " Does Not Exist"
                 ));
-        if(label != null && label.length() > 0 && !Objects.equals(asset.getLabel(), label)){
+        if (label != null && label.length() > 0 && !Objects.equals(asset.getLabel(), label)) {
             asset.setLabel(label);
         }
 
-        if(date != null && !date.equals(asset.getPurchased())){
-            asset.setPurchased(date);
+        if (stringDate != null) {
+            LocalDate date = LocalDate.parse(stringDate);
+            if (!date.equals(asset.getPurchased())) {
+                asset.setPurchased(date);
+            }
         }
 
-        if(price != null && price != 0 && asset.getInitialPrice() != price){
+        if (price != null && price != 0 && asset.getInitialPrice() != price) {
             asset.setInitialPrice(price);
         }
     }

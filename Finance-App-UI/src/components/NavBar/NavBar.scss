@@ -1,4 +1,4 @@
-.display-bar{
+.display-bar {
     height: 50px;
     border-bottom: 0.5px solid rgb(231, 228, 228);
     display: flex;
@@ -6,51 +6,53 @@
     font-size: 14px;
     color: #555;
 
-    .wrapper{
+    .wrapper {
         width: 100%;
         padding: 20px;
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        .search{
+        .search {
             display: flex;
             align-items: center;
             border: 0.5px solid lightgrey;
             padding: 3px;
 
-            input{
+            input {
                 border: none;
                 outline: none;
                 background-color: transparent;
 
 
-                &::placeholder{
+                &::placeholder {
                     font-size: 12px;
                 }
             }
         }
-        
-        .itemList{
+
+        .itemList {
             display: flex;
             align-items: center;
 
-            .item{
+            .item {
                 display: flex;
                 align-items: center;
                 margin: 20px;
                 position: relative;
- 
-                .icon{
+
+                .icon {
                     font-size: 20px;
                 }
-                .avatar{
+
+                .avatar {
                     width: 25px;
                     height: 25px;
                     border-radius: 50%;
                     object-fit: cover;
                 }
-                .counter{
+
+                .counter {
                     width: 15px;
                     height: 15px;
                     background-color: red;

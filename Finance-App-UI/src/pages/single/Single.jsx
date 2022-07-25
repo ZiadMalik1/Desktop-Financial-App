@@ -1,8 +1,8 @@
-import Sidebar from '../../components/SideBar/SideBar'
-import NavBar from '../../components/NavBar/NavBar'
-import Chart from '../../components/Chart/Chart'
-import List from '../../components/List/List'
-import './Single.scss'
+import Chart from "../../components/Chart/Chart";
+import List from "../../components/List/List";
+import NavBar from "../../components/NavBar/NavBar";
+import Sidebar from "../../components/SideBar/SideBar";
+import "./Single.scss";
 
 const Single = () => {
   return (
@@ -15,7 +15,16 @@ const Single = () => {
             <div className="editButton">Edit</div>
             <h1 className="leftTitle">Information</h1>
             <div className="item">
-              <a href="https://www.freepnglogos.com/pics/png-apple-logo" title="Image from freepnglogos.com"><img className="itemImg"src="https://www.freepnglogos.com/uploads/apple-logo-png/apple-logo-png-dallas-shootings-don-add-are-speech-zones-used-4.png" alt="apple logo png dallas shootings don add are speech zones used" /></a>
+              <a
+                href="https://www.freepnglogos.com/pics/png-apple-logo"
+                title="Image from freepnglogos.com"
+              >
+                <img
+                  className="itemImg"
+                  src="https://www.freepnglogos.com/uploads/apple-logo-png/apple-logo-png-dallas-shootings-don-add-are-speech-zones-used-4.png"
+                  alt="apple logo png dallas shootings don add are speech zones used"
+                />
+              </a>
               <div className="details">
                 <h1 className="itemTitle">Apple</h1>
                 <div className="detailItem">
@@ -38,7 +47,7 @@ const Single = () => {
             </div>
           </div>
           <div className="right">
-            <Chart aspect={3 / 1} title="Apple's Year"/>
+            <Chart aspect={3 / 1} title="Apple's Year" />
           </div>
         </div>
         <div className="bottom">
@@ -47,7 +56,7 @@ const Single = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Single
+export default Single;

@@ -1,4 +1,4 @@
-.widget{
+.widget {
     display: flex;
     justify-content: space-between;
     flex: 1;
@@ -8,41 +8,44 @@
     border-radius: 10px;
     height: 100px;
 
-    .left, .right{
+    .left,
+    .right {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
 
-        .title{
+        .title {
             font-weight: bold;
             font-size: 14px;
             color: rgb(167, 166, 166);
         }
 
-        .counter{
+        .counter {
             font-size: 28px;
             font-weight: 300;
         }
 
-        .link{
+        .link {
             width: max-content;
             font-size: 12px;
             border-bottom: 1px solid gray;
         }
 
-        .percentage{
+        .percentage {
             display: flex;
             align-items: center;
             font-size: 14px;
 
-            &.positive{
+            &.positive {
                 color: green;
             }
-            &.negative{
+
+            &.negative {
                 color: red;
             }
         }
-        .icon{
+
+        .icon {
             font-size: 18px;
             padding: 5px;
             border-radius: 5px;

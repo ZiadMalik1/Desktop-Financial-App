@@ -1,22 +1,23 @@
-.single{
+.single {
     display: flex;
     width: 100%;
-    .singleContainer{
+
+    .singleContainer {
         flex: 6;
 
-        .top{
+        .top {
             padding: 20px;
             display: flex;
             gap: 20px;
 
-            .left{
+            .left {
                 flex: 1;
                 -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
                 box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
                 padding: 20px;
                 position: relative;
 
-                .editButton{
+                .editButton {
                     position: absolute;
                     top: 0;
                     right: 0;
@@ -25,36 +26,36 @@
                     color: #7451f8;
                     background-color: #7551f822;
                     cursor: pointer;
-                    border-radius: 0px 0px 0px 5px ;
+                    border-radius: 0px 0px 0px 5px;
                 }
 
-                .item{
+                .item {
                     display: flex;
                     gap: 20px;
 
-                    .itemImg{
+                    .itemImg {
                         width: 75px;
                         height: 75px;
                         object-fit: cover;
                     }
 
-                    .details{
-                        .itemTitle{
+                    .details {
+                        .itemTitle {
                             margin-bottom: 10px;
                             color: #555;
                         }
 
-                        .detailItem{
+                        .detailItem {
                             margin-bottom: 10px;
                             font-size: 14px;
 
-                            .itemKey{
+                            .itemKey {
                                 font-weight: bold;
                                 color: gray;
                                 margin-right: 5px;
                             }
 
-                            .itemValue{
+                            .itemValue {
                                 font-weight: 300;
                             }
                         }
@@ -62,19 +63,19 @@
                 }
             }
 
-            .right{
+            .right {
                 flex: 2;
             }
         }
 
-        .bottom{
+        .bottom {
             -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
             box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
             padding: 20px;
             margin: 10px 20px;
         }
 
-        .leftTitle{
+        .leftTitle {
             font-size: 16px;
             color: lightgray;
             margin-bottom: 20px;

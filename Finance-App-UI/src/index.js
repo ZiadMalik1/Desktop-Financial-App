@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from '../src/components/App/App';
-import reportWebVitals from './reportWebVitals';
-import { DarkModeContextProvider } from './context/darkModeContext';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "../src/components/App/App";
+import { DarkModeContextProvider } from "./context/darkModeContext";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
 
-const root = ReactDOM.createRoot(document.getElementById('element'));
+const root = ReactDOM.createRoot(document.getElementById("element"));
 root.render(
   <React.StrictMode>
     <DarkModeContextProvider>
