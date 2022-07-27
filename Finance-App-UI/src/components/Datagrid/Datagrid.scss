@@ -35,5 +35,13 @@
             align-items: center;
             justify-content: center;
         }
+
+        &.up {
+            color: green;
+        }
+
+        &.down {
+            color: red;
+        }
     }
 }

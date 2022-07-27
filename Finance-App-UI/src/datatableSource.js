@@ -18,9 +18,9 @@ export const columns = [
   {
     field: "initialPrice",
     headerName: "Initial",
-    align: "left",
+    align: "center",
     headerAlign: "center",
-    width: 125,
+    width: 112,
     editable: true,
     renderCell: (params) => {
       return (
@@ -33,16 +33,15 @@ export const columns = [
   {
     field: "stockPrice",
     headerName: "Price",
-    width: 100,
-    align: "left",
+    width: 112,
+    align: "center",
     headerAlign: "center",
     editable: true,
     renderCell: (params) => {
-      let status = params.row.stockChange > 0 ? "Profitable" : "Bleeding";
-      let icon =
-        status === "Profitable" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
+      let status = params.row.status;
+      let icon = status === "up" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
       return (
-        <div className="price">
+        <div className={`price ${status}`}>
           {dollarUSLocale.format(params.row.stockPrice)}
           {icon}
         </div>
@@ -58,12 +57,11 @@ export const columns = [
     width: 125,
     editable: true,
     renderCell: (params) => {
-      let status = params.row.stockChange > 0 ? "Profitable" : "Bleeding";
-      let icon =
-        status === "Profitable" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
+      let status = params.row.stockChange > 0 ? "up" : "down";
+      let icon = status === "up" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
       return (
-        <div className="price">
-          {params.row.stockChange}%{icon}
+        <div className={`price ${status}`}>
+          {Math.round(params.row.stockChange * 100) / 100}%{icon}
         </div>
       );
     },
@@ -75,11 +73,10 @@ export const columns = [
     headerAlign: "center",
     width: 125,
     renderCell: (params) => {
-      let status = params.row.totalChange > 0 ? "Profitable" : "Bleeding";
-      let icon =
-        status === "Profitable" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
+      let status = params.row.totalChange > 0 ? "up" : "down";
+      let icon = status === "up" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
       return (
-        <div className="price">
+        <div className={`price ${status}`}>
           {params.row.totalChange}%{icon}
         </div>
       );
@@ -92,21 +89,31 @@ export const columns = [
     headerAlign: "center",
     width: 250,
     renderCell: (params) => {
-      let status = params.row.totalChange > 0 ? "Profitable" : "Bleeding";
-      let icon =
-        status === "Profitable" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
+      let status = params.row.totalChange > 0 ? "up" : "down";
+      let dayStatus = params.row.net > 0 ? "up" : "down";
+
+      let icon = status === "up" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
+      let dayIcon =
+        dayStatus === "up" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
+
       return (
         <div className="net">
           <div className="netTotal">
             {dollarUSLocale.format(params.row.total)}
           </div>
-          <div className="netChange">
+          <div className={`netChange ${status}`}>
             <div className="details">
               {dollarUSLocale.format(
                 (params.row.stockPrice - params.row.initialPrice) *
                   params.row.shares
               )}
               {icon}
+            </div>
+          </div>
+          <div className={`netChange ${dayStatus}`}>
+            <div className="details">
+              {dollarUSLocale.format(params.row.net * params.row.shares)}
+              {dayIcon}
             </div>
           </div>
         </div>

@@ -37,12 +37,23 @@ function useSocket(labelData) {
       ws.onmessage = function incoming(message) {
         const next = Yaticker.decode(new Buffer(message.data, "base64"));
         let newArr = Array.from(stockInfo);
+        console.log(next);
         let obj = newArr.find((f) => f.Label === next.id);
-        if (obj) obj.Value = next.price;
+        if (obj) {
+          if (obj.Value > next.price) {
+            obj.Status = "down";
+          } else if (obj.Value < next.price) {
+            obj.Status = "up";
+          }
+          obj.Value = next.price;
+          obj.Net = next.change;
+          obj.Change = next.changePercent;
+        }
         setStockInfo(newArr);
       };
     });
   };
+
   return [stockInfo];
 }
 
@@ -50,6 +61,9 @@ const getStockInfo = (data) => {
   return data.map((element) => ({
     Label: element,
     Value: 0,
+    Change: 0,
+    Status: "",
+    Net: 0,
   }));
 };
 

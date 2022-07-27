@@ -23,9 +23,25 @@ function Footer(props) {
       );
     }, 0);
 
+    const daysNet = props.yahooData.reduce((accumulator, element) => {
+      console.log(element.Label + "fddd " + element.Net);
+      console.log(
+        element.Net *
+          props.apiData.find((item) => item.label === element.Label).shares
+      );
+      return (
+        accumulator +
+        element.Net *
+          props.apiData.find((item) => item.label === element.Label).shares
+      );
+    }, 0);
+
     let status = currentTotal - initialTotal > 0 ? "up" : "down";
+    let dayStatus = daysNet > 0 ? "up" : "down";
 
     let icon = status === "up" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
+    let dayIcon =
+      dayStatus === "up" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
 
     return (
       <Box
@@ -46,6 +62,10 @@ function Footer(props) {
           <div className={`footerElementDetail ${status}`}>
             {dollarUSLocale.format(currentTotal - initialTotal)}
             {icon}
+            <div className={`footerElementDetail ${dayStatus}`}>
+              {dollarUSLocale.format(daysNet)}
+              {dayIcon}
+            </div>
           </div>
         </div>
       </Box>

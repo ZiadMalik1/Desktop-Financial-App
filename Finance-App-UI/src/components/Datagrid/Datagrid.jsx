@@ -33,10 +33,11 @@ const Datagrid = () => {
   const [apiData, setApiData] = useState([]);
   const [labelData, setLabelData] = useState([]);
   const [yahooData] = useSocket(labelData);
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState(yahooData);
 
   useEffect(() => {
     handleData();
+    console.log("Hds");
   }, []);
 
   useEffect(() => {
@@ -44,8 +45,13 @@ const Datagrid = () => {
   }, [yahooData]);
 
   const handleRows = () => {
-    const newRows = yahooData.map(getRowData);
-    setRows(newRows);
+    console.log("HEsssuyddghghdssdsdsddsdsdsd");
+    if (yahooData.length !== 0) {
+      const newRows = yahooData.map(getRowData);
+      setRows(newRows);
+    } else {
+      setTimeout(handleRows, 1000);
+    }
   };
 
   function getRowData(row) {
@@ -61,23 +67,24 @@ const Datagrid = () => {
       stockLabel: row.Label,
       initialPrice: initialPrice,
       stockPrice: row.Value,
-      stockChange: row.Value,
+      stockChange: row.Change,
       totalChange: Math.round(totalChange * 100) / 100,
       shares: shares,
       total: Math.round(row.Value * shares * 100) / 100,
+      status: row.Status,
+      net: row.Net,
     };
   }
 
   const handleData = () => {
     service.get("").then((res) => {
       setApiData(res);
-      console.log(apiData);
       setLabelData(res.map((element) => element.label));
     });
   };
 
   return (
-    <div style={{ height: 880, width: "100%" }}>
+    <div style={{ height: 940, width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns.concat(actionColumn)}
