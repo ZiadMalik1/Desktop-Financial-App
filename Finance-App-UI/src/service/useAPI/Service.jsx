@@ -11,7 +11,7 @@ function joinURL(baseURL, url) {
 
 export default class Service {
   constructor() {
-    this.domain = "http://localhost:8080/api/v1/assets";
+    this.domain = "https://localhost:8080/api/v1/assets";
   }
 
   request(url, method = "POST", data = null) {

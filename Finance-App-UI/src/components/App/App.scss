@@ -1,0 +1,18 @@
+.home-connect {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid black 1px;
+
+    .header-connect {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto;
+        padding: 0 100px 0 100px;
+        height: 820px;
+    }
+
+}

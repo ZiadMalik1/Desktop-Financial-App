@@ -8,12 +8,13 @@ import MonitorHeartTwoToneIcon from "@mui/icons-material/MonitorHeartTwoTone";
 import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone";
 import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
+import PlaidLinkComponent from "../PlaidLink/PlaidLinkComponent";
 import "./SideBar.scss";
 
-const SideBar = () => {
+const SideBar = (props) => {
   const { dispatch } = useContext(DarkModeContext);
 
   return (

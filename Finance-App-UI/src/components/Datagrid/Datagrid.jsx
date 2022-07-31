@@ -45,7 +45,7 @@ const Datagrid = () => {
   }, [yahooData]);
 
   const handleRows = () => {
-    console.log("HEsssuyddghghdssdsdsddsdsdsd");
+    console.log("dfddrdjjkjkjsdsddsdsadffasdddsdsdsd");
     if (yahooData.length !== 0) {
       const newRows = yahooData.map(getRowData);
       setRows(newRows);

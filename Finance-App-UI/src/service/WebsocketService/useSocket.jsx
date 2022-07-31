@@ -58,6 +58,7 @@ function useSocket(labelData) {
 }
 
 const getStockInfo = (data) => {
+  console.log("HELLOOOOO")
   return data.map((element) => ({
     Label: element,
     Value: 0,

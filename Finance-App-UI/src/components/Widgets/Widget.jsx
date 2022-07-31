@@ -3,95 +3,119 @@ import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined";
 import CurrencyBitcoinOutlinedIcon from "@mui/icons-material/CurrencyBitcoinOutlined";
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
+import { useEffect, useState } from "react";
+import useAccounts from "../../service/Plaid-Link/useAccounts";
 import "./Widget.scss";
 
 const Widget = ({ type }) => {
-  let data;
+  const [data, setData] = useState({});
+  const [amount, setAmount] = useState(0);
+  const [accounts, setAccounts] = useAccounts();
+
+  let dollarUSLocale = Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
+  useEffect(() => {
+    setParams(type);
+  }, [accounts]);
+
+  console.log("HELLOssssasaankjsdasdsdasasdasds");
+
+  function setParams(type) {
+    switch (type) {
+      case "stock":
+        setData({
+          title: "Stock",
+          isMoney: true,
+          link: "See all Users",
+          icon: (
+            <ShowChartIcon
+              className="icon"
+              style={{
+                color: "crimson",
+                backgroundColor: "rgba(255, 0, 0, 0.2)",
+              }}
+            />
+          ),
+        });
+        break;
+
+      case "crypto":
+        setData({
+          title: "Crypto",
+          isMoney: true,
+          link: "See all Cryptocurrency Holdings",
+          icon: (
+            <CurrencyBitcoinOutlinedIcon
+              className="icon"
+              style={{
+                color: "crimson",
+                backgroundColor: "rgba(255, 0, 0, 0.2)",
+              }}
+            />
+          ),
+        });
+        break;
+
+      case "property":
+        setData({
+          title: "Property",
+          isMoney: true,
+          link: "See all Properties",
+          icon: (
+            <HomeWorkOutlinedIcon
+              className="icon"
+              style={{
+                color: "crimson",
+                backgroundColor: "rgba(255, 0, 0, 0.2)",
+              }}
+            />
+          ),
+        });
+        break;
+
+      case "balance":
+        if (accounts) {
+          if (accounts.length !== 0) {
+            accounts.map((element) => console.log(element.balances.current));
+            let settingAmount = accounts[0].balances.current;
+            setAmount(settingAmount);
+          }
+        }
+
+        setData({
+          title: "Account Balance",
+          isMoney: true,
+          link: "See all Accounts",
+          icon: (
+            <AccountBalanceWalletOutlinedIcon
+              className="icon"
+              style={{
+                color: "crimson",
+                backgroundColor: "rgba(255, 0, 0, 0.2)",
+              }}
+            />
+          ),
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
 
   //Temporary Data
-  const amount = 1000;
   const diff = 20;
-
-  switch (type) {
-    case "stock":
-      data = {
-        title: "Stock",
-        isMoney: true,
-        link: "See all Users",
-        icon: (
-          <ShowChartIcon
-            className="icon"
-            style={{
-              color: "crimson",
-              backgroundColor: "rgba(255, 0, 0, 0.2)",
-            }}
-          />
-        ),
-      };
-      break;
-
-    case "crypto":
-      data = {
-        title: "Crypto",
-        isMoney: true,
-        link: "See all Cryptocurrency Holdings",
-        icon: (
-          <CurrencyBitcoinOutlinedIcon
-            className="icon"
-            style={{
-              color: "crimson",
-              backgroundColor: "rgba(255, 0, 0, 0.2)",
-            }}
-          />
-        ),
-      };
-      break;
-
-    case "property":
-      data = {
-        title: "Property",
-        isMoney: true,
-        link: "See all Properties",
-        icon: (
-          <HomeWorkOutlinedIcon
-            className="icon"
-            style={{
-              color: "crimson",
-              backgroundColor: "rgba(255, 0, 0, 0.2)",
-            }}
-          />
-        ),
-      };
-      break;
-
-    case "balance":
-      data = {
-        title: "Account Balance",
-        isMoney: true,
-        link: "See all Accounts",
-        icon: (
-          <AccountBalanceWalletOutlinedIcon
-            className="icon"
-            style={{
-              color: "crimson",
-              backgroundColor: "rgba(255, 0, 0, 0.2)",
-            }}
-          />
-        ),
-      };
-      break;
-
-    default:
-      break;
-  }
 
   return (
     <div className="widget">
       <div className="left">
         <span className="title">{data.title}</span>
         <span className="counter">
-          {data.isMoney && "$"}
-          {amount}
+          {data.isMoney}
+          {dollarUSLocale.format(amount)}
         </span>
         <span className="link">{data.link}</span>
       </div>

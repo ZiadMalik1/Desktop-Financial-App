@@ -15,7 +15,7 @@ const Single = () => {
 
   function getData() {
     axios
-      .get("http://localhost:8080/api/v1/assets")
+      .get("https://localhost:8080/api/v1/assets")
       .then((response) => response.data)
       .then((data) => {
         setStocks(data);

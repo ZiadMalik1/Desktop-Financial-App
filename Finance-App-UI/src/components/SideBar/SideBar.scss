@@ -3,6 +3,13 @@
     border-right: 0.5px solid rgb(231, 228, 228);
     min-height: 100vh;
 
+    .plaid-connect {
+        margin-top: 75px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .top {
         height: 50px;
         display: flex;

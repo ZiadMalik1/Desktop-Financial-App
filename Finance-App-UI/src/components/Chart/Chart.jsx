@@ -28,7 +28,7 @@ class Chart extends React.Component {
       let date = new Date().getHours();
       console.log(date);
       axios
-        .post("http://localhost:8080/api/v1/totals", {
+        .post("https://localhost:8080/api/v1/totals", {
           amount,
         })
         .then((response) => response.data)
