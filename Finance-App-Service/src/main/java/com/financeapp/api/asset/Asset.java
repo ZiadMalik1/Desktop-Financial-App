@@ -14,8 +14,8 @@ public class Asset {
 
     @Id
     @SequenceGenerator(
-            name="asset_sequence",
-            sequenceName="asset_sequence",
+            name = "asset_sequence",
+            sequenceName = "asset_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
@@ -93,9 +93,9 @@ public class Asset {
         this.initialPrice = initialPrice;
     }
 
-    public double getUpdatedPrice() throws IOException, ParseException {
+    public double getUpdatedPrice() {
         return this.updatedPrice;
-                //Double.parseDouble(finnhubClient.getQuote(this.getLabel()).getCurrentPrice());
+        //Double.parseDouble(finnhubClient.getQuote(this.getLabel()).getCurrentPrice());
     }
 
     public void setUpdatedPrice(double updatedPrice) {

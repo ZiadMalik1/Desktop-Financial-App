@@ -42,7 +42,8 @@ public class AssetService {
     public void updateAsset(Long assetId,
                             String label,
                             String stringDate,
-                            Double price) {
+                            Double price,
+                            Double shares) {
         Asset asset = assetRepository.findAssetById(assetId)
                 .orElseThrow(() -> new IllegalStateException(
                         "Asset with ID: " + assetId + " Does Not Exist"
@@ -60,6 +61,10 @@ public class AssetService {
 
         if (price != null && price != 0 && asset.getInitialPrice() != price) {
             asset.setInitialPrice(price);
+        }
+
+        if (shares != null && asset.getShares() != shares) {
+            asset.setShares(shares);
         }
     }
 }

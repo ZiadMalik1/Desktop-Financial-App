@@ -10,6 +10,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ParseException;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -59,7 +60,7 @@ public class FinnhubClient {
     public Quote getQuote(String symbol) throws IOException, ParseException {
         HttpGet get = new HttpGet(Endpoint.QUOTE.url() + "?token=" + token + "&symbol=" + symbol);
 
-        String result = null;
+        String result;
         try (CloseableHttpResponse response = httpClient.execute(get)) {
             result = EntityUtils.toString(response.getEntity());
         }
@@ -68,12 +69,13 @@ public class FinnhubClient {
     }
 
     /**
-     *  Get the Stock Candle object for a date or a range. Set startEpoch equal to the endEpoch for one day.
-     * @param symbol Ticker symbol
+     * Get the Stock Candle object for a date or a range. Set startEpoch equal to the endEpoch for one day.
+     *
+     * @param symbol     Ticker symbol
      * @param resolution Supported resolution includes 1, 5, 15, 30, 60, D, W, M.
-     * Some timeframes might not be available depending on the exchange.
+     *                   Some timeframes might not be available depending on the exchange.
      * @param startEpoch In seconds, not milliseconds.
-     * @param endEpoch As above.
+     * @param endEpoch   As above.
      * @return JSON object with arrays for the close, low, high, open, volume. status is a String.
      * @throws IOException
      * @throws ParseException
@@ -82,7 +84,7 @@ public class FinnhubClient {
         HttpGet get = new HttpGet(Endpoint.CANDLE.url() + "?token=" + token
                 + "&symbol=" + symbol.toUpperCase() + "&resolution=" + resolution + "&from=" + startEpoch + "&to=" + endEpoch);
 
-        String result = null;
+        String result;
         try (CloseableHttpResponse response = httpClient.execute(get)) {
             result = EntityUtils.toString(response.getEntity());
         }
@@ -109,7 +111,8 @@ public class FinnhubClient {
             result = EntityUtils.toString(response.getEntity());
         }
 
-        return objectMapper.readValue(result, new TypeReference<List<EnrichedSymbol>>(){});
+        return objectMapper.readValue(result, new TypeReference<List<EnrichedSymbol>>() {
+        });
     }
 
     public SymbolLookup searchSymbol(String query) throws IOException, ParseException {
