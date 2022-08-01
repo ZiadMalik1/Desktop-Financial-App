@@ -3,13 +3,14 @@ package com.plaid;
 import com.plaid.client.model.AccountsGetResponse;
 import com.plaid.client.model.ItemPublicTokenExchangeResponse;
 import com.plaid.client.model.LinkTokenCreateResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 @RestController
 @RequestMapping(path = "api/v1/plaid")
-@CrossOrigin
+@CrossOrigin()
 public class PlaidController {
 
     private final PlaidService plaidService;
@@ -18,8 +19,8 @@ public class PlaidController {
         this.plaidService = plaidService;
     }
 
-    @GetMapping(value = "/getLink")
-    public LinkTokenCreateResponse getLinkToken() {
+    @GetMapping(value = "/createLink")
+    public LinkTokenCreateResponse createLinkToken() {
         return plaidService.createLinkToken();
     }
 
@@ -31,6 +32,11 @@ public class PlaidController {
     @GetMapping(path = "/getAccounts")
     public AccountsGetResponse getAccounts() throws IOException {
         return plaidService.getAccounts();
+    }
+
+    @GetMapping(path = "/getAccessTokenExists")
+    public ResponseEntity<String> accessExists() {
+        return plaidService.accessExists();
     }
 
 }

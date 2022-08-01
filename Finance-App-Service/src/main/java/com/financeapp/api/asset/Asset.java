@@ -1,6 +1,6 @@
 package com.financeapp.api.asset;
 
-import com.financeapp.api.services.stock_price_fetcher.FinnhubClient;
+
 import org.apache.hc.core5.http.ParseException;
 
 import javax.persistence.*;
@@ -33,15 +33,12 @@ public class Asset {
     private double allTimeChange;
 
     @Transient
-    private FinnhubClient finnhubClient;
-
-    @Transient
     private static final DecimalFormat df = new DecimalFormat("0.00");
 
     private LocalDate purchased;
 
+
     public Asset() {
-        finnhubClient = new FinnhubClient("cba7s3iad3ickr4ml4hg");
     }
 
     public Asset(String label, double shares, double initialPrice, LocalDate purchased) {
@@ -49,16 +46,15 @@ public class Asset {
         this.shares = shares;
         this.initialPrice = initialPrice;
         this.purchased = purchased;
-        finnhubClient = new FinnhubClient("cba7s3iad3ickr4ml4hg");
     }
 
-    public Asset(Long id, String label, double shares, double initialPrice, LocalDate purchased) {
+    public Asset(Long id, String label, double shares, double initialPrice, LocalDate purchased, double updatedPrice) {
         this.id = id;
         this.label = label;
         this.shares = shares;
         this.initialPrice = initialPrice;
         this.purchased = purchased;
-        finnhubClient = new FinnhubClient("cba7s3iad3ickr4ml4hg");
+        this.updatedPrice = updatedPrice;
     }
 
     public Long getId() {
@@ -93,9 +89,8 @@ public class Asset {
         this.initialPrice = initialPrice;
     }
 
-    public double getUpdatedPrice() {
+    public double getUpdatedPrice(){
         return this.updatedPrice;
-        //Double.parseDouble(finnhubClient.getQuote(this.getLabel()).getCurrentPrice());
     }
 
     public void setUpdatedPrice(double updatedPrice) {
@@ -112,7 +107,7 @@ public class Asset {
 
     public double getAllTimeChange() throws IOException, ParseException {
         double change = ((this.getUpdatedPrice() - this.getInitialPrice()) / this.getInitialPrice()) * 100;
-        return Double.parseDouble(df.format(change));
+        return 0;
     }
 
     public void setAllTimeChange(double allTimeChange) {

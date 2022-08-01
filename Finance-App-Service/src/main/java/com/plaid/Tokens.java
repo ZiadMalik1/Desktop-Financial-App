@@ -7,7 +7,7 @@ public class Tokens {
         String secret = "";
         try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/finances");
 
-             Statement stmt = conn.createStatement()) {
+                Statement stmt = conn.createStatement()) {
             String strSelect = "SELECT secret FROM plaid WHERE title = '" + secretType + "'";
             ResultSet rset = stmt.executeQuery(strSelect);
 
@@ -23,8 +23,8 @@ public class Tokens {
 
     public void insertSecret(String secret) {
         try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/finances");
-             Statement stmt = conn.createStatement()) {
-            String strSelect = "UPDATE plaid SET secret = '" + secret + "'WHERE title = 'Access'";
+                Statement stmt = conn.createStatement()) {
+            String strSelect = "UPDATE plaid SET secret = '" + secret + "'WHERE title = 'Access_SANDBOX'";
             ResultSet rset = stmt.executeQuery(strSelect);
 
         } catch (SQLException ex) {

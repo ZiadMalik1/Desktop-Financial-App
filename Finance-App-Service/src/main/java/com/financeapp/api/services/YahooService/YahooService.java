@@ -1,40 +1,45 @@
-package com.financeapp.api.services.AlphaVantage;
+package com.financeapp.api.services.YahooService;
 
-import io.github.mainstringargs.alphavantagescraper.AlphaVantageConnector;
-import io.github.mainstringargs.alphavantagescraper.StockQuotes;
-import io.github.mainstringargs.alphavantagescraper.output.AlphaVantageException;
-import io.github.mainstringargs.alphavantagescraper.output.quote.StockQuotesResponse;
-import io.github.mainstringargs.alphavantagescraper.output.quote.data.StockQuote;
+import com.financeapp.api.model.StockWrapper;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import yahoofinance.YahooFinance;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+@AllArgsConstructor
 @Service
-public class AlphaService {
+public class YahooService {
 
-    private AlphaVantageConnector apiConnector;
+    private final RefreshService refreshService;
 
-    private StockQuotes stockQuotes;
-
-    public AlphaService() {
-        String apiKey = "RD7UQQS33V45F84N";
-        int timeout = 0;
-        this.apiConnector = new AlphaVantageConnector(apiKey, timeout);
-        this.stockQuotes = new StockQuotes(apiConnector);
+    public StockWrapper findStock(final String ticker) {
+        try {
+            return new StockWrapper(YahooFinance.get(ticker));
+        } catch (IOException e) {
+            System.out.println("ERROR");
+        }
+        return null;
     }
 
-    public Double getQuote(String Label) {
-        double price = 0.0;
-        try {
-            String symbol = Label;
-            System.out.println("Stock: " + symbol);
-            StockQuotesResponse response = stockQuotes.quote("KR");
-            System.out.println("CHECKED");
-            StockQuote stock = response.getStockQuote();
-            price = stock.getPrice();
-            System.out.println("STOCK: " + Label + " PRICE: " + price);
-        } catch (AlphaVantageException e) {
-            System.out.println("something went wrong");
-        }
-        return price;
+    public List<StockWrapper> findStocks(final List<String> tickers) {
+        return tickers.stream().map(this::findStock).filter(Objects::nonNull).collect(Collectors.toList());
+    }
+
+    public BigDecimal findPrice(final StockWrapper stock) throws IOException {
+        return stock.getStock().getQuote(refreshService.shouldRefresh(stock)).getPrice();
+    }
+
+    public BigDecimal findLastChangePercent(final StockWrapper stock) throws IOException {
+        return stock.getStock().getQuote(refreshService.shouldRefresh(stock)).getChangeInPercent();
+    }
+
+    public BigDecimal findChangeFrom200MeanPercent(final StockWrapper stock) throws IOException {
+        return stock.getStock().getQuote(refreshService.shouldRefresh(stock)).getChangeFromAvg200InPercent();
     }
 
 }

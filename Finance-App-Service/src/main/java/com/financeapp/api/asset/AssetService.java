@@ -1,26 +1,51 @@
 package com.financeapp.api.asset;
 
+import com.financeapp.api.model.StockWrapper;
+import com.financeapp.api.services.YahooService.YahooService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class AssetService {
 
     private final AssetRepository assetRepository;
 
+    private final YahooService yahooService;
+
     @Autowired
-    public AssetService(AssetRepository assetRepository) {
+    public AssetService(AssetRepository assetRepository, YahooService yahooService) {
         this.assetRepository = assetRepository;
+        this.yahooService = yahooService;
     }
 
     public List<Asset> getAllAssets() {
-        return assetRepository.findAll();
+        AtomicReference<Double> updatedPrice = new AtomicReference<>(0.00);
+        List<Asset> assetList = assetRepository.findAll();
+        List<Asset> newList = assetList.stream()
+                .map(asset -> {
+                    StockWrapper stock = yahooService.findStock(asset.getLabel());
+                    try {
+                        updatedPrice.set(yahooService.findPrice(stock).doubleValue());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    return new Asset(
+                            asset.getId(),
+                            asset.getLabel(),
+                            asset.getShares(),
+                            asset.getInitialPrice(),
+                            asset.getPurchased(),
+                            updatedPrice.get());
+                }).toList();
+        return newList;
     }
 
     public void addAsset(Asset asset) {
@@ -40,14 +65,13 @@ public class AssetService {
 
     @Transactional
     public void updateAsset(Long assetId,
-                            String label,
-                            String stringDate,
-                            Double price,
-                            Double shares) {
+            String label,
+            String stringDate,
+            Double price,
+            Double shares) {
         Asset asset = assetRepository.findAssetById(assetId)
                 .orElseThrow(() -> new IllegalStateException(
-                        "Asset with ID: " + assetId + " Does Not Exist"
-                ));
+                        "Asset with ID: " + assetId + " Does Not Exist"));
         if (label != null && label.length() > 0 && !Objects.equals(asset.getLabel(), label)) {
             asset.setLabel(label);
         }
