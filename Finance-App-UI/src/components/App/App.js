@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { assetInputs, stockInputs } from "../../formSource";
@@ -14,51 +14,64 @@ import "./App.scss";
 
 function App() {
   const { darkMode } = useContext(DarkModeContext);
+  const [element, setElement] = useState();
   const [isConnected, setIsConnected] = useTestConnection();
+  const [state, setState] = useState();
 
-  useEffect(() => {}, [isConnected]);
+  useEffect(() => {
+    setHomePage();
+  }, [state]);
 
-  if (isConnected) {
-    return (
-      <div className={darkMode ? "app dark" : "app"}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/">
-              <Route index element={<Home />}>
-                {" "}
+  useEffect(() => {
+    setState(isConnected);
+    console.log(state);
+  }, [isConnected]);
+
+  function setHomePage() {
+    if (state === true) {
+      setElement(
+        <div className={darkMode ? "app dark" : "app"}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/">
+                <Route index element={<Home />}>
+                  {" "}
+                </Route>
+                <Route path="login" element={<Login />} />
+                <Route path="stocks">
+                  <Route index element={<List />} />
+                  <Route path=":userId" element={<Single />} />
+                  <Route
+                    path="new"
+                    element={<New inputs={stockInputs} title="Add New Stock" />}
+                  />
+                </Route>
+                <Route path="assets">
+                  <Route index element={<List />} />
+                  <Route path=":prodId" element={<Single />} />
+                  <Route
+                    path="new"
+                    element={<New inputs={assetInputs} title="Add New Asset" />}
+                  />
+                </Route>
               </Route>
-              <Route path="login" element={<Login />} />
-              <Route path="stocks">
-                <Route index element={<List />} />
-                <Route path=":userId" element={<Single />} />
-                <Route
-                  path="new"
-                  element={<New inputs={stockInputs} title="Add New Stock" />}
-                />
-              </Route>
-              <Route path="assets">
-                <Route index element={<List />} />
-                <Route path=":prodId" element={<Single />} />
-                <Route
-                  path="new"
-                  element={<New inputs={assetInputs} title="Add New Asset" />}
-                />
-              </Route>
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
-    );
-  } else {
-    return (
-      <div className="home-connect">
-        <div className="header-connect">
-          <h1>Please Connect your Bank Accounts</h1>
-          <PlaidLinkComponent />
+            </Routes>
+          </BrowserRouter>
         </div>
-      </div>
-    );
+      );
+    } else if (state === false) {
+      setElement(
+        <div className="home-connect">
+          <div className="header-connect">
+            <h1>Please Connect your Bank Accounts</h1>
+            <PlaidLinkComponent />
+          </div>
+        </div>
+      );
+    }
   }
+
+  return [element];
 }
 
 export default App;

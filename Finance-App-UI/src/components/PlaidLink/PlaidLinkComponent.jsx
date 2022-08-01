@@ -6,7 +6,9 @@ const PlaidLinkComponent = () => {
   const [linkToken, setLinkToken] = useState(null);
 
   const generateToken = async () => {
-    const response = await fetch("https://localhost:8080/api/v1/assets/plaid");
+    const response = await fetch(
+      "http://localhost:8080/api/v1/plaid/createLink"
+    );
     const data = await response.json();
     console.log(data);
     setLinkToken(data.linkToken);
@@ -16,7 +18,7 @@ const PlaidLinkComponent = () => {
   }, []);
 
   const onSuccess = async (token, metadata) => {
-    await fetch("https://localhost:8080/api/v1/assets/exchange", {
+    await fetch("http://localhost:8080/api/v1/plaid/exchange", {
       method: "POST",
       body: token,
       header: {

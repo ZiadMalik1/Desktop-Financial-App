@@ -11,7 +11,7 @@ function joinURL(baseURL, url) {
 
 export default class Service {
   constructor() {
-    this.domain = "https://localhost:8080/api/v1/assets";
+    this.domain = "http://localhost:8080/api/v1";
   }
 
   request(url, method = "POST", data = null) {
@@ -26,10 +26,10 @@ export default class Service {
     return axios(url, options);
   }
 
-  get(url,id) {
+  get(url, id) {
     const method = "GET";
-    if(id){
-        url = `${url}/${id}`
+    if (id) {
+      url = `${url}/${id}`;
     }
     return this.request(url, method).then((res) => res.data);
   }

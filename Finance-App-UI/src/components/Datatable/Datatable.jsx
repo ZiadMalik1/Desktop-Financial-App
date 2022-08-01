@@ -16,7 +16,7 @@ class Datatable extends React.Component {
 
   componentDidMount() {
     axios
-      .get("https://localhost:8080/api/v1/assets")
+      .get("http://localhost:8080/api/v1/assets")
       .then((response) => response.data)
       .then((data) => {
         let initialSum = data.reduce((accumulator, currentValue) => {
@@ -50,11 +50,11 @@ class Datatable extends React.Component {
       });
     const date = new Date();
     var offset = -300; //Timezone offset for EST in minutes.
-    var estDate = date.getHours()
-    if(estDate > 14){
+    var estDate = date.getHours();
+    if (estDate > 14) {
       this.setState({
-        afterHours: true
-      })
+        afterHours: true,
+      });
     }
   }
 
@@ -63,7 +63,6 @@ class Datatable extends React.Component {
       <div className="datatable">
         <div className="datatableTitle">
           Stocks
-          {this.state.afterHours === true && <div className="afterHours">After Hours</div>}
           <Link to="/stocks/new" className="link">
             Add New
           </Link>

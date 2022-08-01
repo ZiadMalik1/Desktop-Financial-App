@@ -5,14 +5,15 @@ const useAccounts = () => {
 
   useEffect(() => {
     handleData();
-  }, [accounts]);
+  }, []);
 
   const handleData = async () => {
     let promise = new Promise(async (resolve, reject) => {
-      await fetch("https://localhost:8080/api/v1/assets/hello")
+      await fetch("http://localhost:8080/api/v1/plaid/getAccounts")
         .then((response) => response.json())
         .then((response) => {
           console.log(response);
+          setAccounts(response.accounts);
         });
     });
 

@@ -59,6 +59,10 @@ const Datagrid = () => {
       return object.label === row.Label;
     });
 
+    if (row.Value == 0) {
+      row.Value = stockData.updatedPrice;
+    }
+
     const initialPrice = stockData.initialPrice;
     const shares = stockData.shares;
     const totalChange = ((row.Value - initialPrice) / initialPrice) * 100;
@@ -77,7 +81,7 @@ const Datagrid = () => {
   }
 
   const handleData = () => {
-    service.get("").then((res) => {
+    service.get("assets").then((res) => {
       setApiData(res);
       setLabelData(res.map((element) => element.label));
     });

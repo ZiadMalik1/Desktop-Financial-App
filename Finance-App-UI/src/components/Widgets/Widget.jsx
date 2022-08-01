@@ -4,13 +4,11 @@ import CurrencyBitcoinOutlinedIcon from "@mui/icons-material/CurrencyBitcoinOutl
 import HomeWorkOutlinedIcon from "@mui/icons-material/HomeWorkOutlined";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
 import { useEffect, useState } from "react";
-import useAccounts from "../../service/Plaid-Link/useAccounts";
 import "./Widget.scss";
 
-const Widget = ({ type }) => {
+const Widget = ({ type, apiData, accounts }) => {
   const [data, setData] = useState({});
   const [amount, setAmount] = useState(0);
-  const [accounts, setAccounts] = useAccounts();
 
   let dollarUSLocale = Intl.NumberFormat("en-US", {
     style: "currency",
@@ -19,13 +17,18 @@ const Widget = ({ type }) => {
 
   useEffect(() => {
     setParams(type);
-  }, [accounts]);
-
-  console.log("HELLOssssasaankjsdasdsdasasdasds");
+  }, [apiData, accounts]);
 
   function setParams(type) {
     switch (type) {
       case "stock":
+        let sum = 0;
+        apiData.forEach((object) => {
+          if (object.label !== "BTC-USD" && object.label !== "ETH-USD") {
+            sum += object.updatedPrice * object.shares;
+          }
+        });
+        setAmount(sum);
         setData({
           title: "Stock",
           isMoney: true,
@@ -43,6 +46,13 @@ const Widget = ({ type }) => {
         break;
 
       case "crypto":
+        let cryptoSum = 0;
+        apiData.forEach((object) => {
+          if (object.label == "BTC-USD" || object.label === "ETH-USD") {
+            cryptoSum += object.updatedPrice * object.shares;
+          }
+        });
+        setAmount(cryptoSum);
         setData({
           title: "Crypto",
           isMoney: true,
