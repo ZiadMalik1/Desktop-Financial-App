@@ -29,7 +29,6 @@ const Home = () => {
 
   const handleTotals = async () => {
     await service.get("totals").then((res) => {
-      console.log(res);
       setTotalsData(res);
     });
   };

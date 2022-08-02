@@ -8,7 +8,7 @@ import "./Widget.scss";
 
 const Widget = ({ type, apiData, accounts }) => {
   const [data, setData] = useState({});
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(319.16);
 
   let dollarUSLocale = Intl.NumberFormat("en-US", {
     style: "currency",
@@ -89,8 +89,9 @@ const Widget = ({ type, apiData, accounts }) => {
       case "balance":
         if (accounts) {
           if (accounts.length !== 0) {
-            accounts.map((element) => console.log(element.balances.current));
-            let settingAmount = accounts[0].balances.current;
+            let settingAmount = accounts.find(
+              (account) => account.name === "CHASE COLLEGE"
+            ).balances.current;
             setAmount(settingAmount);
           }
         }

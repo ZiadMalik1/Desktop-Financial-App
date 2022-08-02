@@ -48,6 +48,13 @@ public class Asset {
         this.purchased = purchased;
     }
 
+    public Asset(String label, double shares, double initialPrice) {
+        this.label = label;
+        this.shares = shares;
+        this.initialPrice = initialPrice;
+        this.purchased = LocalDate.now();
+    }
+
     public Asset(Long id, String label, double shares, double initialPrice, LocalDate purchased, double updatedPrice) {
         this.id = id;
         this.label = label;
@@ -89,7 +96,7 @@ public class Asset {
         this.initialPrice = initialPrice;
     }
 
-    public double getUpdatedPrice(){
+    public double getUpdatedPrice() {
         return this.updatedPrice;
     }
 

@@ -22,6 +22,7 @@ public class AssetController {
 
     @PostMapping()
     public void addAsset(@RequestBody Asset asset) {
+        System.out.println(asset);
         this.assetService.addAsset(asset);
     }
 

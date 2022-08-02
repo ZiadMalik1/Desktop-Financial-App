@@ -24,11 +24,6 @@ function Footer(props) {
     }, 0);
 
     const daysNet = props.yahooData.reduce((accumulator, element) => {
-      console.log(element.Label + "fddd " + element.Net);
-      console.log(
-        element.Net *
-          props.apiData.find((item) => item.label === element.Label).shares
-      );
       return (
         accumulator +
         element.Net *

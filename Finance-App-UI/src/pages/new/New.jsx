@@ -1,7 +1,25 @@
 import { GrMoney } from "react-icons/gr";
 import NavBar from "../../components/NavBar/NavBar";
 import SideBar from "../../components/SideBar/SideBar";
+import Service from "../../service/useAPI/Service";
 import "./New.scss";
+
+const service = new Service();
+
+function submitNewValue(e) {
+  e.preventDefault();
+  alert("Form Was Submitted");
+
+  var label = document.getElementById("Stock Label").value;
+  var shares = document.getElementById("Share Amount").value;
+
+  var Asset = new Object(); 
+  Asset.label = label;
+  Asset.shares = parseFloat(shares);
+  Asset.initialPrice = 10.83;
+
+  service.post("assets", Asset);
+}
 
 const New = ({ inputs, title }) => {
   return (
@@ -17,11 +35,15 @@ const New = ({ inputs, title }) => {
             <GrMoney className="iconImg" />
           </div>
           <div className="right">
-            <form action="">
+            <form action="" onSubmit={submitNewValue}>
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input type={input.type} placeholder={input.placeholder} />
+                  <input
+                    id={input.label}
+                    type={input.type}
+                    placeholder={input.placeholder}
+                  />
                 </div>
               ))}
               <button>Submit</button>

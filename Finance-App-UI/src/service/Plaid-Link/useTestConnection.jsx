@@ -12,12 +12,10 @@ const useTestConnection = () => {
       await fetch(
         "http://localhost:8080/api/v1/plaid/getAccessTokenExists"
       ).then((response) => {
-        console.log(response);
         if (response.status === 200) {
           setIsConnected(true);
-          console.log("TRUE");
         } else {
-          console.log("BOOO");
+          setIsConnected(false);
         }
       });
     });

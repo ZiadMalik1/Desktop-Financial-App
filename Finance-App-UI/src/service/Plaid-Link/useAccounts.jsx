@@ -12,7 +12,6 @@ const useAccounts = () => {
       await fetch("http://localhost:8080/api/v1/plaid/getAccounts")
         .then((response) => response.json())
         .then((response) => {
-          console.log(response);
           setAccounts(response.accounts);
         });
     });

@@ -10,7 +10,6 @@ const PlaidLinkComponent = () => {
       "http://localhost:8080/api/v1/plaid/createLink"
     );
     const data = await response.json();
-    console.log(data);
     setLinkToken(data.linkToken);
   };
   useEffect(() => {
@@ -31,7 +30,7 @@ const PlaidLinkComponent = () => {
     <PlaidLink
       token={linkToken}
       clientName="malikBandit"
-      env="sandbox"
+      env="development"
       product={["auth", "transactions"]}
       onSuccess={onSuccess}
       className="connect-button"

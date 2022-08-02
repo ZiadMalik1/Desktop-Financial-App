@@ -1,43 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import proto from "../../resources/YPricingData.proto";
 
 const protobuf = require("protobufjs");
 const { Buffer } = require("buffer/");
 
-const ws = new WebSocket("wss://streamer.finance.yahoo.com");
-
 function useSocket(labelData) {
-  const [stockInfo, setStockInfo] = useState([]);
+  const [stockInfo, setStockInfo] = useState(getStockInfo(labelData));
+  const ws = useRef(null);
 
   useEffect(() => {
-    setStockInfo(getStockInfo(labelData));
-    getPrice();
-  }, [labelData]);
+    const socket = new WebSocket("wss://streamer.finance.yahoo.com");
 
-  const getPrice = () => {
     protobuf.load(proto, (error, root) => {
       if (error) {
         return console.log(error);
       }
       const Yaticker = root.lookupType("yaticker");
-
-      ws.onopen = function open() {
+      socket.onopen = () => {
         console.log("connected");
-        ws.send(
+        socket.send(
           JSON.stringify({
             subscribe: labelData,
           })
         );
       };
 
-      ws.onclose = function close() {
+      socket.onclose = () => {
         console.log("disconnected");
       };
 
-      ws.onmessage = function incoming(message) {
+      socket.onmessage = (message) => {
         const next = Yaticker.decode(new Buffer(message.data, "base64"));
         let newArr = Array.from(stockInfo);
-        console.log(next);
         let obj = newArr.find((f) => f.Label === next.id);
         if (obj) {
           if (obj.Value > next.price) {
@@ -52,13 +46,22 @@ function useSocket(labelData) {
         setStockInfo(newArr);
       };
     });
-  };
+
+    ws.current = socket;
+
+    return () => {
+      socket.close();
+    };
+  }, [labelData, stockInfo]);
+
+  useEffect(() => {
+    setStockInfo(getStockInfo(labelData));
+  }, [labelData]);
 
   return [stockInfo];
 }
 
 const getStockInfo = (data) => {
-  console.log("HELLOOOOO")
   return data.map((element) => ({
     Label: element,
     Value: 0,

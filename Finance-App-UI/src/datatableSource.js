@@ -8,7 +8,7 @@ let dollarUSLocale = Intl.NumberFormat("en-US", {
 
 export const columns = [
   {
-    field: "stockLabel",
+    field: "Label",
     headerName: "Name",
     width: 125,
     align: "center",

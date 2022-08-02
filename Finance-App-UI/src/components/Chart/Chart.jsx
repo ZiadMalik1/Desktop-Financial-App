@@ -17,9 +17,6 @@ const Chart = (props) => {
     return format(new Date(date), "dd/MMM");
   };
 
-  //let newDate = dateFormatter(date);
-  //console.log(newDate);
-
   const getTicks = (startDate, endDate, num) => {
     const diffDays = differenceInCalendarDays(endDate, startDate);
 
@@ -66,7 +63,6 @@ const Chart = (props) => {
   const startDate = new Date(2022, 0, 2);
   const endDate = new Date(2023, 11, 31);
   let dataSorted = props.stocks.sort((a, b) => (a.id > b.id ? 1 : -1));
-  console.log(dataSorted);
   const data = props.stocks.map((total) => ({
     date: new Date(total.date),
     val: total.amount,

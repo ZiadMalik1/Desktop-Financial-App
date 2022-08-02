@@ -26,7 +26,7 @@ public class PlaidService {
 
     private final PlaidApi plaidClient = this.createPlaidClient("Sandbox");
 
-    private String ACCESS_TOKEN = tokens.getSecret("Access_SANDBOX");
+    private String ACCESS_TOKEN = tokens.getSecret("Access_DEVELOPMENT");
 
     public LinkTokenCreateResponse createLinkToken() {
         LinkTokenCreateRequestUser user = new LinkTokenCreateRequestUser().clientUserId("e127110");
@@ -48,7 +48,6 @@ public class PlaidService {
         Response<ItemPublicTokenExchangeResponse> response = plaidClient.itemPublicTokenExchange(request).execute();
 
         assert response.body() != null;
-        System.out.println(response.body().getAccessToken());
         tokens.insertSecret(response.body().getAccessToken());
         this.ACCESS_TOKEN = response.body().getAccessToken();
 
@@ -68,9 +67,9 @@ public class PlaidService {
 
         HashMap<String, String> apiKeys = new HashMap<>();
         apiKeys.put("clientId", this.CLIENT_ID);
-        apiKeys.put("secret", this.SANDBOX_SECRET);
+        apiKeys.put("secret", this.DEVELOPMENT_SECRET);
         ApiClient apiClient = new ApiClient(apiKeys);
-        apiClient.setPlaidAdapter(ApiClient.Sandbox);
+        apiClient.setPlaidAdapter(ApiClient.Development);
 
         return apiClient.createService(PlaidApi.class);
     }

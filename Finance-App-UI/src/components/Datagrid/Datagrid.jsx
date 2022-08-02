@@ -2,12 +2,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { columns } from "../../datatableSource";
-import Service from "../../service/useAPI/Service";
 import useSocket from "../../service/WebsocketService/useSocket";
 import { Footer } from "../Footer/Footer";
 import "./Datagrid.scss";
-
-const service = new Service();
 
 const actionColumn = [
   {
@@ -29,30 +26,18 @@ const actionColumn = [
   },
 ];
 
-const Datagrid = () => {
+const Datagrid = ({ data, labels }) => {
   const [apiData, setApiData] = useState([]);
-  const [labelData, setLabelData] = useState([]);
-  const [yahooData] = useSocket(labelData);
+  const [yahooData] = useSocket(labels);
   const [rows, setRows] = useState(yahooData);
 
   useEffect(() => {
-    handleData();
-    console.log("Hds");
-  }, []);
+    setApiData(data);
+  }, [data]);
 
   useEffect(() => {
-    handleRows();
+    setRows(yahooData.map(getRowData));
   }, [yahooData]);
-
-  const handleRows = () => {
-    console.log("dfddrdjjkjkjsdsddsdsadffasdddsdsdsd");
-    if (yahooData.length !== 0) {
-      const newRows = yahooData.map(getRowData);
-      setRows(newRows);
-    } else {
-      setTimeout(handleRows, 1000);
-    }
-  };
 
   function getRowData(row) {
     const stockData = apiData.find((object) => {
@@ -68,7 +53,7 @@ const Datagrid = () => {
     const totalChange = ((row.Value - initialPrice) / initialPrice) * 100;
 
     return {
-      stockLabel: row.Label,
+      Label: row.Label,
       initialPrice: initialPrice,
       stockPrice: row.Value,
       stockChange: row.Change,
@@ -80,19 +65,12 @@ const Datagrid = () => {
     };
   }
 
-  const handleData = () => {
-    service.get("assets").then((res) => {
-      setApiData(res);
-      setLabelData(res.map((element) => element.label));
-    });
-  };
-
   return (
-    <div style={{ height: 940, width: "100%" }}>
+    <div style={{ height: rows.length * 63, width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns.concat(actionColumn)}
-        getRowId={(row) => row.stockLabel}
+        getRowId={(row) => row.Label}
         pageSize={14}
         components={{
           Footer: Footer,
@@ -104,5 +82,10 @@ const Datagrid = () => {
     </div>
   );
 };
+
+Datagrid.defaultProps = {
+  data: [],
+  labels: []
+}
 
 export default Datagrid;

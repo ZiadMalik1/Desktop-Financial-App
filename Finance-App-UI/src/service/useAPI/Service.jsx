@@ -21,16 +21,27 @@ export default class Service {
       method,
     };
     if (data) {
-      options.body = JSON.stringify({ ...data });
+      options.body = JSON.stringify(data);
     }
+    console.log(url)
+    console.log(options)
     return axios(url, options);
   }
 
-  get(url, id) {
+  async get(url, id) {
     const method = "GET";
     if (id) {
       url = `${url}/${id}`;
     }
-    return this.request(url, method).then((res) => res.data);
+    const res = await this.request(url, method);
+    return res.data;
   }
+
+  async post(url, data){
+    const method = "POST";
+    console.log("HELLO " + url)
+    const res = await this.request(url, method, data);
+    return res.data;
+  }
+
 }

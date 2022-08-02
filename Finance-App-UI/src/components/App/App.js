@@ -8,6 +8,7 @@ import Login from "../../pages/login/Login";
 import New from "../../pages/new/New";
 import Single from "../../pages/single/Single";
 import useTestConnection from "../../service/Plaid-Link/useTestConnection";
+import Service from "../../service/useAPI/Service";
 import "../../style/dark.scss";
 import PlaidLinkComponent from "../PlaidLink/PlaidLinkComponent";
 import "./App.scss";
@@ -15,16 +16,30 @@ import "./App.scss";
 function App() {
   const { darkMode } = useContext(DarkModeContext);
   const [element, setElement] = useState();
-  const [isConnected, setIsConnected] = useTestConnection();
+  const [isConnected] = useTestConnection();
   const [state, setState] = useState();
+  const [apiData, setApiData] = useState([]);
+  const [labelData, setLabelData] = useState([]);
+
+  const service = new Service();
+
+  const handleData = () => {
+    service.get("assets").then((res) => {
+      setApiData(res);
+      setLabelData(res.map((element) => element.label));
+    });
+  };
+
+  useEffect(() => {
+    handleData();
+  }, []);
 
   useEffect(() => {
     setHomePage();
-  }, [state]);
+  }, [state, apiData, labelData]);
 
   useEffect(() => {
     setState(isConnected);
-    console.log(state);
   }, [isConnected]);
 
   function setHomePage() {
@@ -39,7 +54,12 @@ function App() {
                 </Route>
                 <Route path="login" element={<Login />} />
                 <Route path="stocks">
-                  <Route index element={<List />} />
+                  <Route
+                    index
+                    element={
+                      <List path="stocks" data={apiData} labels={labelData} />
+                    }
+                  />
                   <Route path=":userId" element={<Single />} />
                   <Route
                     path="new"
@@ -47,7 +67,7 @@ function App() {
                   />
                 </Route>
                 <Route path="assets">
-                  <Route index element={<List />} />
+                  <Route index element={<List path="assets"/>} />
                   <Route path=":prodId" element={<Single />} />
                   <Route
                     path="new"
