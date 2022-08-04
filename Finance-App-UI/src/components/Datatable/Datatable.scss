@@ -1,9 +1,9 @@
-.datatable{
+.datatable {
     height: 850px;
     padding: 20px;
 
 
-    .datatableTitle{
+    .datatableTitle {
         width: 100%;
         font-size: 24px;
         color: gray;
@@ -12,24 +12,24 @@
         align-items: center;
         justify-content: space-between;
 
-        .afterHours{
+        .afterHours {
             display: flex;
-            padding: 5px 20px 5px 20px; 
+            padding: 5px 20px 5px 20px;
             background-color: red;
             font-size: 30px;
             animation: blinker 1s linear infinite;
             color: white;
-            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             font-weight: lighter;
         }
 
         @keyframes blinker {
             50% {
-              opacity: 0;
+                opacity: 0;
             }
-          }
+        }
 
-        .link{
+        .link {
             text-decoration: none;
             color: green;
             font-size: 16px;
@@ -41,67 +41,72 @@
         }
     }
 
-    .cellWithImg{
+    .cellWithImg {
         display: flex;
         align-items: center;
 
-        .cellImg{
+        .cellImg {
             width: 32px;
             height: 32px;
-            border-radius:  50%;
+            border-radius: 50%;
             object-fit: cover;
             margin-right: 20px;
         }
     }
 
-    .priceWithStatus{
+    .priceWithStatus {
         padding: 5px;
         border-radius: 5px;
         display: flex;
         align-items: center;
         justify-content: center;
-        
-        &.Profitable{
+
+        &.Profitable {
             color: green;
         }
-       
-        &.Bleeding{
+
+        &.Bleeding {
             color: red;
         }
     }
 
-    .cellWithStatus{
+    .cellWithStatus {
         padding: 5px;
         border-radius: 5px;
 
-        &.Profitable{
+        &.Profitable {
             color: green;
             background-color: rgba(0, 128, 0, 0.151);
         }
-       
-        &.Bleeding{
+
+        &.Bleeding {
             color: red;
             background-color: rgba(253, 11, 11, 0.151);
         }
     }
 
-    .cellAction{
+    .cellAction {
         display: flex;
         align-items: center;
         gap: 15px;
 
-        .viewButton{
+        .viewButton {
             padding: 2px 5px;
             border-radius: 5px;
             color: darkblue;
             border: 1px dotted rgba(0, 0, 139, 0.631);
         }
 
-        .deleteButton{
+        .deleteButton {
             padding: 2px 5px;
             border-radius: 5px;
             color: crimson;
             border: 1px dotted rgba(220, 20, 60, 0.614);
+            cursor: pointer;
+        }
+
+        button {
+            all: unset;
         }
     }
 }

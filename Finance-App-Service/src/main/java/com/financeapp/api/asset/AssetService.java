@@ -13,8 +13,6 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static java.util.stream.Collectors.groupingBy;
-
 @Service
 public class AssetService {
 
@@ -60,6 +58,7 @@ public class AssetService {
         if (assetOptional.isPresent()) {
             throw new IllegalStateException("Label already Exists");
         }
+        System.out.println(asset.toString());
         assetRepository.save(asset);
     }
 
@@ -72,10 +71,10 @@ public class AssetService {
 
     @Transactional
     public void updateAsset(Long assetId,
-                            String label,
-                            String stringDate,
-                            Double price,
-                            Double shares) {
+            String label,
+            String stringDate,
+            Double price,
+            Double shares) {
         Asset asset = assetRepository.findAssetById(assetId)
                 .orElseThrow(() -> new IllegalStateException(
                         "Asset with ID: " + assetId + " Does Not Exist"));

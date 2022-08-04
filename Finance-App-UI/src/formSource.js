@@ -26,4 +26,11 @@ export const stockInputs = [
     type: "text",
     placeholder: "300",
   },
+
+  {
+    id: 3,
+    label: "Price Per Share",
+    type: "text",
+    placeholder: "10.89",
+  },
 ];

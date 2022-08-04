@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -20,20 +20,23 @@ public class PlaidService {
 
     private final String CLIENT_ID = tokens.getSecret("Client");
 
-    private final String SANDBOX_SECRET = tokens.getSecret("Sandbox");
-
     private final String DEVELOPMENT_SECRET = tokens.getSecret("Development");
 
-    private final PlaidApi plaidClient = this.createPlaidClient("Sandbox");
+    private final PlaidApi plaidClient = this.createPlaidClient();
 
     private String ACCESS_TOKEN = tokens.getSecret("Access_DEVELOPMENT");
 
     public LinkTokenCreateResponse createLinkToken() {
+        LinkTokenCreateRequestUpdate updateRequest = new LinkTokenCreateRequestUpdate();
+        updateRequest.setAccountSelectionEnabled(true);
         LinkTokenCreateRequestUser user = new LinkTokenCreateRequestUser().clientUserId("e127110");
         LinkTokenCreateRequest request = new LinkTokenCreateRequest()
-                .user(user).clientName("malikBandit")
-                .products(Arrays.asList(Products.fromValue("transactions")))
-                .countryCodes(Arrays.asList(CountryCode.US)).language("en");
+                .user(user)
+                .clientName("malikBandit")
+                .accessToken(this.ACCESS_TOKEN)
+                .countryCodes(List.of(CountryCode.US))
+                .language("en");
+
         try {
             Response<LinkTokenCreateResponse> response = plaidClient.linkTokenCreate(request).execute();
             return response.body();
@@ -55,15 +58,13 @@ public class PlaidService {
     }
 
     public AccountsGetResponse getAccounts() throws IOException {
-        Response<AccountsGetResponse> accountsResponse = plaidClient
-                .accountsBalanceGet(new AccountsBalanceGetRequest()
-                        .accessToken(this.ACCESS_TOKEN))
-                .execute();
+        Response<AccountsGetResponse> accountsResponse = plaidClient.accountsBalanceGet(
+                new AccountsBalanceGetRequest().accessToken(this.ACCESS_TOKEN)).execute();
 
         return accountsResponse.body();
     }
 
-    private PlaidApi createPlaidClient(String environment) {
+    private PlaidApi createPlaidClient() {
 
         HashMap<String, String> apiKeys = new HashMap<>();
         apiKeys.put("clientId", this.CLIENT_ID);

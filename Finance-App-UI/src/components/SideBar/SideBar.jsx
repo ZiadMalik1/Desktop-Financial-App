@@ -1,3 +1,4 @@
+import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import AccountBalanceWalletTwoToneIcon from "@mui/icons-material/AccountBalanceWalletTwoTone";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import BookTwoToneIcon from "@mui/icons-material/BookTwoTone";
@@ -8,7 +9,7 @@ import MonitorHeartTwoToneIcon from "@mui/icons-material/MonitorHeartTwoTone";
 import NotificationsNoneTwoToneIcon from "@mui/icons-material/NotificationsNoneTwoTone";
 import SettingsTwoToneIcon from "@mui/icons-material/SettingsTwoTone";
 import ShowChartIcon from "@mui/icons-material/ShowChart";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import PlaidLinkComponent from "../PlaidLink/PlaidLinkComponent";
@@ -58,6 +59,12 @@ const SideBar = (props) => {
           <li>
             <MonitorHeartTwoToneIcon className="icon" />
             <span>System Health</span>
+          </li>
+          <li>
+            <AccountBalanceIcon className="icon" />
+            <span>
+              <PlaidLinkComponent />
+            </span>
           </li>
           <li>
             <BookTwoToneIcon className="icon" />

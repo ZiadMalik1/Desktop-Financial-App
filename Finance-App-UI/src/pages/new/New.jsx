@@ -13,10 +13,10 @@ function submitNewValue(e) {
   var label = document.getElementById("Stock Label").value;
   var shares = document.getElementById("Share Amount").value;
 
-  var Asset = new Object(); 
+  var Asset = new Object();
   Asset.label = label;
   Asset.shares = parseFloat(shares);
-  Asset.initialPrice = 10.83;
+  Asset.initialPrice = parseFloat(10.83);
 
   service.post("assets", Asset);
 }
@@ -35,7 +35,7 @@ const New = ({ inputs, title }) => {
             <GrMoney className="iconImg" />
           </div>
           <div className="right">
-            <form action="" onSubmit={submitNewValue}>
+            <form action="" onSubmit={submitNewValue} className="form-stock">
               {inputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>

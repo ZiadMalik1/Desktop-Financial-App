@@ -21,10 +21,9 @@ export default class Service {
       method,
     };
     if (data) {
-      options.body = JSON.stringify(data);
+      options.data = data;
     }
-    console.log(url)
-    console.log(options)
+
     return axios(url, options);
   }
 
@@ -37,11 +36,18 @@ export default class Service {
     return res.data;
   }
 
-  async post(url, data){
+  async post(url, data) {
     const method = "POST";
-    console.log("HELLO " + url)
     const res = await this.request(url, method, data);
     return res.data;
   }
 
+  async delete(url, id) {
+    const method = "DELETE";
+    if (id) {
+      url = `${url}/${id}`;
+    }
+    const res = await this.request(url, method);
+    return res.data;
+  }
 }

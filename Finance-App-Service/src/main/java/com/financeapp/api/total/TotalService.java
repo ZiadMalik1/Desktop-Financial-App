@@ -35,9 +35,9 @@ public class TotalService {
         Optional<Total> totalOptional = totalRepository.findTotalByDate(LocalDate.now());
 
         if (totalOptional.isPresent() || total.getAmount() == 0.0) {
-            throw new IllegalStateException("Total from Date: " + total.getDate() + " already Exists");
+            System.out.println("ALREADY EXISTS");
+        } else {
+            totalRepository.save(total);
         }
-
-        totalRepository.save(total);
     }
 }

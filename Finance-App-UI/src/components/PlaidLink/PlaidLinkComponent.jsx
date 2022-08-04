@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { PlaidLink } from "react-plaid-link";
+import { usePlaidLink } from "react-plaid-link";
 import "./PlaidLink.scss";
 
 const PlaidLinkComponent = () => {
@@ -16,27 +16,15 @@ const PlaidLinkComponent = () => {
     generateToken();
   }, []);
 
-  const onSuccess = async (token, metadata) => {
-    await fetch("http://localhost:8080/api/v1/plaid/exchange", {
-      method: "POST",
-      body: token,
-      header: {
-        "Content-Type": "application/json",
-      },
-    });
-  };
+  const { open, ready } = usePlaidLink({
+    token: linkToken,
+    onSuccess: (public_token, metadata) => {
+      //
+    },
+  });
 
-  return (
-    <PlaidLink
-      token={linkToken}
-      clientName="malikBandit"
-      env="development"
-      product={["auth", "transactions"]}
-      onSuccess={onSuccess}
-      className="connect-button"
-    >
-      Connect your Bank Accounts
-    </PlaidLink>
-  );
+  const onSuccess = async (token, metadata) => {};
+
+  return <div onClick={() => open()}>Connect Bank</div>;
 };
 export default PlaidLinkComponent;

@@ -2,34 +2,47 @@ import { DataGrid } from "@mui/x-data-grid";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { columns } from "../../datatableSource";
+import Service from "../../service/useAPI/Service";
 import useSocket from "../../service/WebsocketService/useSocket";
 import { Footer } from "../Footer/Footer";
 import "./Datagrid.scss";
 
-const actionColumn = [
-  {
-    field: "action",
-    headerName: "Action",
-    align: "center",
-    headerAlign: "center",
-    width: 185,
-    renderCell: (params) => {
-      return (
-        <div className="cellAction">
-          <Link to="/stocks/test" style={{ textDecoration: "none" }}>
-            <div className="viewButton">View</div>
-          </Link>
-          <div className="deleteButton">Delete</div>
-        </div>
-      );
-    },
-  },
-];
-
-const Datagrid = ({ data, labels }) => {
-  const [apiData, setApiData] = useState([]);
+const Datagrid = ({ data, labels, setModal }) => {
+  const [apiData, setApiData] = useState(data);
   const [yahooData] = useSocket(labels);
   const [rows, setRows] = useState(yahooData);
+  const [rowModesModel, setRowModesModel] = React.useState({});
+
+  const service = new Service();
+
+  const actionColumn = [
+    {
+      field: "action",
+      headerName: "Action",
+      align: "center",
+      headerAlign: "center",
+      width: 185,
+      renderCell: (params) => {
+        return (
+          <div className="cellAction">
+            <Link to="/stocks/test" style={{ textDecoration: "none" }}>
+              <div className="viewButton">View</div>
+            </Link>
+            <button onClick={handleDeleteClick(params.id)}>
+              <div className="deleteButton">Delete</div>
+            </button>
+          </div>
+        );
+      },
+    },
+  ];
+
+  const handleDeleteClick = (id) => () => {
+    setModal((prev) => !prev);
+    const assetId = apiData.filter((row) => row.label === id)[0].id;
+    service.delete("assets", assetId);
+    setRows(rows.filter((row) => row.Label !== id));
+  };
 
   useEffect(() => {
     setApiData(data);
@@ -66,12 +79,12 @@ const Datagrid = ({ data, labels }) => {
   }
 
   return (
-    <div style={{ height: rows.length * 63, width: "100%" }}>
+    <div style={{ height: rows.length * 66, width: "100%" }}>
       <DataGrid
         rows={rows}
         columns={columns.concat(actionColumn)}
         getRowId={(row) => row.Label}
-        pageSize={14}
+        pageSize={rows.length}
         components={{
           Footer: Footer,
         }}
@@ -85,7 +98,7 @@ const Datagrid = ({ data, labels }) => {
 
 Datagrid.defaultProps = {
   data: [],
-  labels: []
-}
+  labels: [],
+};
 
 export default Datagrid;

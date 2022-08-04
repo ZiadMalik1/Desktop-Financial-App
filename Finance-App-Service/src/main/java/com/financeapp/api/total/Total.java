@@ -8,15 +8,8 @@ import java.time.LocalDate;
 public class Total {
 
     @Id
-    @SequenceGenerator(
-            name="total_sequence",
-            sequenceName="total_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "total_sequence"
-    )
+    @SequenceGenerator(name = "total_sequence", sequenceName = "total_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "total_sequence")
     private Long id;
 
     private double amount;

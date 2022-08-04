@@ -2,6 +2,7 @@ package com.financeapp.api.total;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -17,15 +18,13 @@ public class TotalController {
     }
 
     @GetMapping()
-    public List<Total> getAll(){
+    public List<Total> getAll() {
         return totalService.getAllTotals();
     }
 
     @PostMapping()
-    public void addTotal(@RequestBody Total total){
-        Total addedTotal = new Total(total.getAmount());
-        System.out.println(addedTotal.toString());
-        this.totalService.addTotal(addedTotal);
+    public void addTotal(@RequestBody Total total) {
+        this.totalService.addTotal(new Total(total.getAmount()));
     }
 
 }

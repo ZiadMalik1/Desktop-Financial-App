@@ -1,12 +1,4 @@
 .connect-button {
-    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
-    transform: translateY(-0.25em);
-}
-
-.connect-button:hover {
-    border-style: inset;
-    cursor: pointer;
-    -webkit-box-shadow: inset 0px 0px 24px 9px rgba(0, 0, 0, 0.3);
-    box-shadow: inset 0px 0px 24px 9px rgba(0, 0, 0, 0.3);
-    color: #7451f8;
+    all: unset;
+    border: none;
 }
