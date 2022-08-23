@@ -20,6 +20,7 @@ function App() {
   const [state, setState] = useState();
   const [apiData, setApiData] = useState([]);
   const [labelData, setLabelData] = useState([]);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const service = new Service();
 
@@ -29,6 +30,25 @@ function App() {
       setLabelData(res.map((element) => element.label));
     });
   };
+
+  useEffect(() => {
+    var timerID = setInterval(() => tick(), 1000);
+
+    if (currentTime.getHours() === 15) {
+      if (currentTime.getMinutes() === 11) {
+        console.log(apiData);
+        // service.post("totals", );
+      }
+    }
+
+    return function cleanup() {
+      clearInterval(timerID);
+    };
+  });
+
+  function tick() {
+    setCurrentTime(new Date());
+  }
 
   useEffect(() => {
     handleData();
@@ -67,7 +87,7 @@ function App() {
                   />
                 </Route>
                 <Route path="assets">
-                  <Route index element={<List path="assets"/>} />
+                  <Route index element={<List path="assets" />} />
                   <Route path=":prodId" element={<Single />} />
                   <Route
                     path="new"

@@ -12,17 +12,6 @@
         align-items: center;
         justify-content: space-between;
 
-        .afterHours {
-            display: flex;
-            padding: 5px 20px 5px 20px;
-            background-color: red;
-            font-size: 30px;
-            animation: blinker 1s linear infinite;
-            color: white;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            font-weight: lighter;
-        }
-
         @keyframes blinker {
             50% {
                 opacity: 0;

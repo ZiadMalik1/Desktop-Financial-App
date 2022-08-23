@@ -1,10 +1,8 @@
 package com.financeapp.api.asset;
 
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/v1/assets")
@@ -30,12 +28,9 @@ public class AssetController {
     }
 
     @PutMapping(path = "{assetId}")
-    public void updateAsset(@PathVariable("assetId") Long assetId,
-            @RequestParam(required = false) String label,
-            @RequestParam(required = false) String date,
-            @RequestParam(required = false) Double price,
-            @RequestParam(required = false) Double shares) {
-        assetService.updateAsset(assetId, label, date, price, shares);
+    public void updateAsset(@PathVariable("assetId") String label,
+                            @RequestBody Asset asset) {
+        assetService.updateAsset(label, null, asset.getInitialPrice(), asset.getShares());
     }
 
     @DeleteMapping(path = "{assetId}")

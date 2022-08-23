@@ -1,5 +1,6 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import Box from "@mui/material/Box";
 import * as React from "react";
 import "./Footer.scss";
@@ -39,31 +40,73 @@ function Footer(props) {
       dayStatus === "up" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
 
     return (
-      <Box
-        sx={{
-          p: 2,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-around",
-        }}
-      >
-        <div className="footerElement">
-          <h5>Initial Total: </h5>
-          <div className="price">{dollarUSLocale.format(initialTotal)}</div>
-        </div>
-        <div className="footerElement">
-          <h5>Current Total: </h5>
-          <div className="price">{dollarUSLocale.format(currentTotal)}</div>
-          <div className={`footerElementDetail ${status}`}>
-            {dollarUSLocale.format(currentTotal - initialTotal)}
-            {icon}
-            <div className={`footerElementDetail ${dayStatus}`}>
-              {dollarUSLocale.format(daysNet)}
-              {dayIcon}
+      <>
+        <Box sx={{ p: 1 }}>
+          <div className="todayStatus">
+            <FiberManualRecordIcon
+              fontSize="small"
+              sx={{
+                mr: 1,
+                color: dayStatus === "up" ? "#4caf50" : "#d9182e",
+              }}
+            />
+            <div className="todayDetails">
+              Today's {daysNet > 0 ? `Profit` : `Loss`}
+              <div className={`footerElementDetail ${dayStatus}`}>
+                {dollarUSLocale.format(daysNet)}
+                {dayIcon}
+              </div>
             </div>
           </div>
-        </div>
-      </Box>
+          <div className="alltimeStatus">
+            <FiberManualRecordIcon
+              fontSize="small"
+              sx={{
+                mr: 1,
+                color:
+                  dollarUSLocale.format(currentTotal) >
+                  dollarUSLocale.format(initialTotal)
+                    ? "#4caf50"
+                    : "#d9182e",
+              }}
+            />
+            <div className="alltimeDetails">
+              Alltime's{" "}
+              {dollarUSLocale.format(currentTotal) >
+              dollarUSLocale.format(initialTotal)
+                ? `Profit`
+                : `Loss`}
+              <div className={`footerElementDetail ${status}`}>
+                {(((currentTotal - initialTotal) * 100) / initialTotal).toFixed(
+                  2
+                )}
+                %{icon}
+                {"     "}
+                {dollarUSLocale.format(currentTotal - initialTotal)}
+              </div>
+            </div>
+          </div>
+          <div className="total">
+            <FiberManualRecordIcon
+              fontSize="small"
+              sx={{
+                mr: 1,
+                color:
+                  dollarUSLocale.format(currentTotal) >
+                  dollarUSLocale.format(initialTotal)
+                    ? "#4caf50"
+                    : "#d9182e",
+              }}
+            />
+            <div className="totalDetails">
+              Total{" "}
+              <div className={`footerElementDetail ${status}`}>
+                {dollarUSLocale.format(currentTotal)}
+              </div>
+            </div>
+          </div>
+        </Box>
+      </>
     );
   }
 }

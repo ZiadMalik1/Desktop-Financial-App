@@ -70,14 +70,14 @@ public class AssetService {
     }
 
     @Transactional
-    public void updateAsset(Long assetId,
+    public void updateAsset(
             String label,
             String stringDate,
             Double price,
             Double shares) {
-        Asset asset = assetRepository.findAssetById(assetId)
+        Asset asset = assetRepository.findAssetByLabel(label)
                 .orElseThrow(() -> new IllegalStateException(
-                        "Asset with ID: " + assetId + " Does Not Exist"));
+                        "Asset with ID: " + label + " Does Not Exist"));
         if (label != null && label.length() > 0 && !Objects.equals(asset.getLabel(), label)) {
             asset.setLabel(label);
         }

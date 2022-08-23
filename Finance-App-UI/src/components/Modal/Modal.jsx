@@ -2,6 +2,9 @@ import React, { useCallback, useEffect, useRef } from "react";
 import { MdClose } from "react-icons/md";
 import { animated, useSpring } from "react-spring";
 import styled from "styled-components";
+import Service from "../../service/useAPI/Service";
+
+const service = new Service();
 
 const Background = styled.div`
   width: 100%;
@@ -67,7 +70,7 @@ const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
-export const Modal = ({ showModal, setShowModal }) => {
+export const Modal = ({ showModal, setShowModal, id, setId }) => {
   const modalRef = useRef();
 
   const animation = useSpring({
@@ -99,6 +102,7 @@ export const Modal = ({ showModal, setShowModal }) => {
   }, [keyPress]);
 
   const confirmChoice = () => {
+    service.delete("assets", id);
     setShowModal(false);
   };
 

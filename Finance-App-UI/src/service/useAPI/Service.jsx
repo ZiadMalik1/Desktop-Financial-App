@@ -50,4 +50,13 @@ export default class Service {
     const res = await this.request(url, method);
     return res.data;
   }
+
+  async put(url, id, data) {
+    const method = "PUT";
+    if (id) {
+      url = `${url}/${id}`;
+    }
+    const res = await this.request(url, method, data);
+    console.log(res);
+  }
 }

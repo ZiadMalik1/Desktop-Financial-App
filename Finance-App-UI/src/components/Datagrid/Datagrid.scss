@@ -18,7 +18,7 @@
 
 .net {
     display: flex;
-    gap: 20px;
+    gap: 10px;
 
     .netTotal {
         display: flex;
@@ -29,6 +29,7 @@
     .netChange {
         display: flex;
         font-size: 10px;
+        gap: 12.5px;
 
         .details {
             display: flex;

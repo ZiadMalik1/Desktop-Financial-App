@@ -25,19 +25,19 @@ public class TotalService {
     }
 
     public List<Total> getAllTotals() {
-        if (LocalTime.now(easternTime).getHour() > 16) {
-            this.addTotal(new Total(assetService.getTotal()));
-        }
         return totalRepository.findAll();
     }
 
     public void addTotal(Total total) {
-        Optional<Total> totalOptional = totalRepository.findTotalByDate(LocalDate.now());
 
-        if (totalOptional.isPresent() || total.getAmount() == 0.0) {
-            System.out.println("ALREADY EXISTS");
-        } else {
-            totalRepository.save(total);
+        if (LocalTime.now(easternTime).getHour() > 16) {
+            Optional<Total> totalOptional = totalRepository.findTotalByDate(LocalDate.now());
+
+            if (totalOptional.isPresent() || total.getAmount() == 0.0) {
+                System.out.println("ALREADY EXISTS");
+            } else {
+                totalRepository.save(total);
+            }
         }
     }
 }

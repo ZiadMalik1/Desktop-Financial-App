@@ -1,5 +1,6 @@
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import clsx from "clsx";
 
 let dollarUSLocale = Intl.NumberFormat("en-US", {
   style: "currency",
@@ -10,7 +11,7 @@ export const columns = [
   {
     field: "Label",
     headerName: "Name",
-    width: 125,
+    flex: 1,
     align: "center",
     headerAlign: "center",
     editable: true,
@@ -18,9 +19,9 @@ export const columns = [
   {
     field: "initialPrice",
     headerName: "Initial",
+    flex: 1,
     align: "center",
     headerAlign: "center",
-    width: 112,
     editable: true,
     renderCell: (params) => {
       return (
@@ -33,7 +34,7 @@ export const columns = [
   {
     field: "stockPrice",
     headerName: "Price",
-    width: 112,
+    flex: 1,
     align: "center",
     headerAlign: "center",
     editable: true,
@@ -52,9 +53,9 @@ export const columns = [
     field: "stockChange",
     headerName: "Day Change",
     type: "number",
+    flex: 1,
     align: "center",
     headerAlign: "center",
-    width: 125,
     editable: true,
     renderCell: (params) => {
       let status = params.row.stockChange > 0 ? "up" : "down";
@@ -69,9 +70,19 @@ export const columns = [
   {
     field: "totalChange",
     headerName: "Change",
+    flex: 1,
     align: "center",
     headerAlign: "center",
-    width: 125,
+    cellClassName: (params) => {
+      if (params.row.totalChange == null) {
+        return "";
+      }
+
+      return clsx("super-app", {
+        negative: params.row.totalChange < 0,
+        positive: params.row.totalChange > 0,
+      });
+    },
     renderCell: (params) => {
       let status = params.row.totalChange > 0 ? "up" : "down";
       let icon = status === "up" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />;
@@ -84,10 +95,10 @@ export const columns = [
   },
   {
     field: "total",
-    headerName: "Net",
+    headerName: "Net (Total, Daily)",
+    flex: 2,
     align: "center",
     headerAlign: "center",
-    width: 250,
     renderCell: (params) => {
       let status = params.row.totalChange > 0 ? "up" : "down";
       let dayStatus = params.row.net > 0 ? "up" : "down";
@@ -123,11 +134,22 @@ export const columns = [
   {
     field: "shares",
     headerName: "Shares",
+    editable: true,
+    flex: 1,
     align: "center",
     headerAlign: "center",
-    width: 150,
     renderCell: (params) => {
       return <div className="price">{params.row.shares}</div>;
+    },
+  },
+  {
+    field: "purchased",
+    headerName: "Time (In Years)",
+    flex: 1,
+    align: "center",
+    headerAlign: "center",
+    renderCell: (params) => {
+      return <div className="price">{params.row.purchased}</div>;
     },
   },
 ];

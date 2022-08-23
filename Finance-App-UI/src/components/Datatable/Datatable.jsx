@@ -7,7 +7,7 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-const Datatable = ({ path, data, labels, setModal }) => {
+const Datatable = ({ path, data, labels, setModal, setId }) => {
   const newPath = `/${path}/new`;
   return (
     <div className="datatable">
@@ -17,7 +17,7 @@ const Datatable = ({ path, data, labels, setModal }) => {
           Add New
         </Link>
       </div>
-      <Datagrid data={data} labels={labels} setModal={setModal} />
+      <Datagrid data={data} labels={labels} setModal={setModal} setId={setId} />
     </div>
   );
 };
