@@ -1,6 +1,7 @@
-# Getting Started with Create React App
+# malikBandit
+## An ElectronJS Desktop Application for Financial Insight
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Bootstrapped with React
 
 ## Available Scripts
 
@@ -11,60 +12,30 @@ In the project directory, you can run:
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## What is it?
 
-### `npm test`
+Initially started as a simple desktop application to help keep track of Stock Investment portfolios across multiple platforms to allow for cohesion, malikBandit is now working towards becoming an all around Financial Advisor application. It makes use of the following technologies
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Springboot Standalone API - Retrieval of User Portfolio Information (Stock Tickers, Historical Total Data)
+- React Application - Bootstrapped with ElectronJS to allow for ease of use right from your Desktop
+- Plaid API - Allows for retrieval of Bank Account balances / Credit Card balances to allow for a more overall overview of a user's Net Worth progression
+- Yahoo Finance API Web Sockets - Get Live Feed on Stock Tickers to give user a detailed look into how their portfolios are performing day to day
+- Several React UI Frameworks such as MaterialUI - Dashboard Components
+- JWT Authentication - Allow for more end-to-end security across the entire application
+- postgreSQL Database - Basic SQL Database used to store user information protected by JWT Authentication
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## How it works
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Users are allowed to add stocks they own and details such as date purchased and shares owned which is then posted to a SpringBoot Backend which stores the information within a postgreSQL Database. This information is retrieved on call from the frontend where we also make use of the Yahoo Finance API to provide live stock information on the stocks stored for the user such as:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Current Price
+- 50 Day Average Price
+- Moving average convergence divergence
+- Relative Strength Index
 
-### `npm run eject`
+To name a few indicators that allow the user to have insight on their stock performances. The API also makes a daily entry to the database on the total of the user's assets subtracted by their debts to get an estimated net worth. This networth is then indexed within a graph on the dashboard of the user's frontend and allows them to visually see how their networth is progressing.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Why malikBandit
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The audience I am targeting are the Stock Fanatics who use multiple platforms to invest. Today, your banks have the ability to allow you to invest. However, different platforms bring different advantages and therefore, you can have shares spread across different platforms rendering them hard to keep track of in terms of progression. This application will not only allow you to keep track of your portfolio, but also your net worth in general. Hopefully in the future, using A.I and Machine Learning, we will be able to give users financial advice regarding their day to day spending.
